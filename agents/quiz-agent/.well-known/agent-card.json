@@ -1,0 +1,14 @@
+{
+  "name": "Quiz Agent",
+  "description": "Handles quizzes and generates questions/answers",
+  "protocolVersion": "0.3.0",
+  "version": "0.1.0",
+  "url": "http://localhost:6070",
+  "skills": [
+    {
+      "id": "generate-quiz",
+      "name": "Generate Quiz",
+      "description": "Creates quizzes from topics or subjects"
+    }
+  ]
+}
