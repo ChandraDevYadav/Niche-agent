@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000"; // Gateway URL
+const BASE_URL = "http://localhost:5000";
 
 export async function startWorkflow(topic, retries = 3, delayMs = 2000) {
   for (let attempt = 1; attempt <= retries; attempt++) {

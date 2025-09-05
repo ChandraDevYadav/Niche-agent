@@ -29,11 +29,14 @@ async function fetchAgentCardWithRetry(url, retries = 1, delayMs = 2000) {
   }
 }
 
+// gateway.js (5000)
 app.post("/start", async (req, res) => {
   try {
     const { topic } = req.body;
+
     const client = await fetchAgentCardWithRetry(AGENT_CARD_URL);
 
+    // Send topic as a single text part
     const response = await client.sendMessage({
       message: {
         messageId: crypto.randomUUID(),
@@ -43,10 +46,20 @@ app.post("/start", async (req, res) => {
       },
     });
 
-    res.json({ status: "sent", response });
+    // Extract the recommendation from agent's result
+    const recommendation =
+      response?.result?.recommendation ||
+      response?.response?.result?.recommendation ||
+      "No recommendation returned";
+
+    res.json({
+      success: true,
+      recommendation,
+      rawResponse: response,
+    });
   } catch (err) {
     console.error("❌ Error starting workflow:", err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
